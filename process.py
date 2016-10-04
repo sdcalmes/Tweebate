@@ -12,7 +12,6 @@ db = client.tweet_data
 def process_tweet(tweet):
     tweet = json.loads(tweet)
     tweet_text = tweet.get('text')
-    #process the actual text here. remove hashtags, etc.
     trump = word_in_text('trump', tweet_text)
     clinton = word_in_text('clinton', tweet_text)
     if trump is False and clinton is False:
@@ -20,7 +19,6 @@ def process_tweet(tweet):
     vs = vaderSentiment(tweet_text.encode('utf-8'))
     if vs.get('neu') == 1 or (vs.get('compound') > -.35 and vs.get('compound') < .35):
         return 0
-    #get sentiment
     if vs.get('compound') > .35:
         pos = True
     if vs.get('compound') < -.35:
@@ -49,3 +47,4 @@ def count_tweets(pos, person):
     posts = db.tweets
     found = posts.find({"$and": [{'positive' : pos}, {person : True}]})
     return found.count()
+    
