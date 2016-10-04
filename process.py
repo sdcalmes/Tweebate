@@ -48,5 +48,4 @@ def word_in_text(word, text):
 def count_tweets(pos, person):
     posts = db.tweets
     found = posts.find({"$and": [{'positive' : pos}, {person : True}]})
-    print found.count()
     return found.count()
